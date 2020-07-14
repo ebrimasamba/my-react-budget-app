@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react";
 import { Layout } from "./components/Layout";
 import { Balance } from "./components/Balance";

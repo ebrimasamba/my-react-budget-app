@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useContext, useEffect } from "react";
 import { TransactionContext } from "./TransactionContext";
 

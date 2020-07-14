@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { createContext, useState, useEffect } from "react";
 
 export const TransactionContext = createContext();
@@ -18,10 +20,13 @@ export const TransactionProvider = ({ children }) => {
   const startUp = (localstorage) => {
     setDatabase(localstorage);
   };
-  const updateDatabase = (newItem) => {
-    setDatabase((prevItems) => [...prevItems, newItem]);
-    localStorage.setItem("budget", JSON.stringify(database));
-    console.log(database.length);
+  const updateDatabase = async (newItem) => {
+    await setDatabase((prevItems) => [...prevItems, newItem]);
+    await setTimeout(() => {
+      console.log(database);
+    }, 3000);
+    await localStorage.setItem("budget", JSON.stringify(database));
+    // console.log(database.length);
   };
 
   const deleteFromDatabase = (id) => {

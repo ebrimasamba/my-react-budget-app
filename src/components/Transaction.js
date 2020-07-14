@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useRef } from "react";
 import { TransactionContext } from "./TransactionContext";
 import { FaTrash } from "react-icons/fa";

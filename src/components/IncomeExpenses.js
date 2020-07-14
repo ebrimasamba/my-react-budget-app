@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useEffect, useState } from "react";
 import { TransactionContext } from "./TransactionContext";
 import { FaMoneyBill, FaShoppingBag } from "react-icons/fa";
