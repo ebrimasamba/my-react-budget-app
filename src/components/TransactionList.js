@@ -1,23 +1,19 @@
-/* eslint-disable */
-
 import React, { useContext, useEffect } from "react";
 import { Transaction } from "./Transaction";
 import { TransactionContext } from "./TransactionContext";
 
 export const TransactionList = () => {
-  const { database, updateDatabase, deleteFromDatabase } = useContext(
-    TransactionContext
-  );
+  const { transactions } = useContext(TransactionContext);
   useEffect(() => {
     console.log("Refresh UI");
-  }, [database]);
+  }, [transactions]);
 
   return (
     <div className="mt-5">
       <h3 className="font-semibold border-b pb-1 text-lg">Items</h3>
       <div className="text-black">
-        {database.length > 0 ? (
-          database.map((item, id) => (
+        {transactions.length > 0 ? (
+          transactions.map((item, id) => (
             <Transaction
               name={item.name}
               amount={item.amount}

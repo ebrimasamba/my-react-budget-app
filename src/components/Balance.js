@@ -4,19 +4,17 @@ import React, { useContext, useState, useEffect } from "react";
 import { TransactionContext } from "./TransactionContext";
 
 export const Balance = () => {
-  const { database, updateDatabase, deleteFromDatabase, startUp } = useContext(
-    TransactionContext
-  ); // const [amount, setAmount] = useState(0);
+  const { transactions } = useContext(TransactionContext); // const [amount, setAmount] = useState(0);
 
   // useEffect(() => {
-  //   const amount = database.reduce((acc, prevItem) => {
+  //   const amount = transactions.reduce((acc, prevItem) => {
   //     acc += prevItem;
   //   }, 0);
   //   setAmount(() => {
 
   //   })
   //   console.log(amount);
-  // }, [database]);
+  // }, [transactions]);
 
   return (
     <div className="text-center mt-3">
@@ -24,7 +22,10 @@ export const Balance = () => {
       <p className="font-semibold text-2xl">
         D
         {Intl.NumberFormat().format(
-          database.reduce((acc, currValue) => acc + Number(currValue.amount), 0)
+          transactions.reduce(
+            (acc, currValue) => acc + Number(currValue.amount),
+            0
+          )
         )}
       </p>
     </div>

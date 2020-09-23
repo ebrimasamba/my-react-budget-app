@@ -1,42 +1,64 @@
-/* eslint-disable */
+import React, { createContext, useEffect, useReducer } from "react";
+import AppReducer from "./AppReducer";
 
-import React, { createContext, useState, useEffect } from "react";
+const initialState = {
+  transactions: JSON.parse(localStorage.getItem("transactions")) || [],
+};
 
-export const TransactionContext = createContext();
+export const TransactionContext = createContext(initialState);
+
 export const TransactionProvider = ({ children }) => {
-  const [database, setDatabase] = useState([]);
-  const [isExpanded, setExpanded] = useState(false);
+  const [state, dispatch] = useReducer(AppReducer, initialState);
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("transactions"))) {
+      initialState.transactions = JSON.parse(
+        localStorage.getItem("transactions")
+      );
+      console.log("local storage has value", initialState.transactions);
+    } else {
+      localStorage.setItem(
+        "transactions",
+        JSON.stringify(initialState.transactions)
+      );
+      console.log("local storage empty");
+    }
+  }, []);
+
+  const deleteTransactions = (id) => {
+    dispatch({
+      type: "DELETE_TRANSACTIONS",
+      payload: id,
+    });
+  };
+
+  const addTransactions = (name, amount) => {
+    if (name === "") {
+      alert("your item has no name");
+      return;
+    }
+
+    if (Number(amount) === 0 || amount === "") {
+      alert("you transaction amount cannot be empty or zero");
+      return;
+    }
+
+    dispatch({
+      type: "ADD_TRANSACTIONS",
+      payload: { name, amount },
+    });
+  };
 
   useEffect(() => {
-    if (localStorage.getItem("budget")) {
-      console.log("There is a local storage");
-      startUp(JSON.parse(localStorage.getItem("budget")));
-    } else {
-      localStorage.setItem("budget", JSON.stringify(database));
-      console.log("There is no local storage so we create one");
-    }
-    // eslint-disable-next-line
-  }, []);
-  const startUp = (localstorage) => {
-    setDatabase(localstorage);
-  };
-  const updateDatabase = async (newItem) => {
-    await setDatabase((prevItems) => [...prevItems, newItem]);
-    await setTimeout(() => {
-      console.log(database);
-    }, 3000);
-    await localStorage.setItem("budget", JSON.stringify(database));
-    // console.log(database.length);
-  };
+    localStorage.setItem("transactions", JSON.stringify(state.transactions));
+  }, [state.transactions]);
 
-  const deleteFromDatabase = (id) => {
-    setDatabase(database.filter((value, index) => index !== id));
-    localStorage.setItem("budget", JSON.stringify(database));
-    console.log("database", database);
-  };
   return (
     <TransactionContext.Provider
-      value={{ database, updateDatabase, deleteFromDatabase, startUp }}
+      value={{
+        transactions: state.transactions,
+        deleteTransactions,
+        addTransactions,
+      }}
     >
       {children}
     </TransactionContext.Provider>

@@ -8,17 +8,15 @@ export const Transaction = ({ name, amount, id }) => {
   const styles = `border-r-4 p-2 mt-3  shadow bg-white flex justify-between text-sm rounded relative z-10 `;
   const transRef = useRef();
 
-  const { database, updateDatabase, deleteFromDatabase, startUp } = useContext(
-    TransactionContext
-  );
-  const deleteTransaction = (e) => {
-    // transRef.current.classList.add("trans-animation-out");
-    console.log(transRef.current.classList);
+  const { deleteTransactions } = useContext(TransactionContext);
+  // const deleteTransaction = (e) => {
+  //   transRef.current.classList.add("trans-animation-out");
+  //   console.log(transRef.current.classList);
 
-    setTimeout(() => {
-      deleteFromDatabase(id);
-    }, 0);
-  };
+  //   setTimeout(() => {
+  //     deleteFromDatabase(id);
+  //   }, 0);
+  // };
 
   return (
     <div
@@ -29,7 +27,7 @@ export const Transaction = ({ name, amount, id }) => {
       <div>
         <button
           className="delete-btn absolute px-2 bg-red-400 text-white h-full flex items-center rounded-l transition-ease-in-out duration-100"
-          onClick={deleteTransaction}
+          onClick={() => deleteTransactions(id)}
         >
           <FaTrash></FaTrash>
         </button>

@@ -5,9 +5,7 @@ import { TransactionContext } from "./TransactionContext";
 import { FaMoneyBill, FaShoppingBag } from "react-icons/fa";
 
 export const IncomeExpenses = () => {
-  const { database, updateDatabase, deleteFromDatabase, startUp } = useContext(
-    TransactionContext
-  );
+  const { transactions } = useContext(TransactionContext);
   const [expense, setExpense] = useState(0);
   const [income, setIncome] = useState(0);
 
@@ -15,7 +13,7 @@ export const IncomeExpenses = () => {
   let incomes = 0;
 
   const Income = () => {
-    const incomeAmount = database.filter(
+    const incomeAmount = transactions.filter(
       (incomeAmount) => incomeAmount.amount > 0
     );
     if (incomeAmount.length > 0) {
@@ -31,7 +29,7 @@ export const IncomeExpenses = () => {
   };
 
   const Expense = () => {
-    const expenseAmount = database.filter(
+    const expenseAmount = transactions.filter(
       (expenseAmount) => expenseAmount.amount < 0
     );
 
@@ -52,7 +50,7 @@ export const IncomeExpenses = () => {
     Expense();
     Income();
     //eslint-disable-next-line
-  }, [database]);
+  }, [transactions]);
 
   return (
     <div className="flex justify-center mt-2 rounded-md text-sm ">

@@ -1,34 +1,14 @@
-/* eslint-disable */
-
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { TransactionContext } from "./TransactionContext";
 
 export const AddTransaction = () => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const { database, updateDatabase, deleteFromDatabase, startUp } = useContext(
-    TransactionContext
-  );
+  const { addTransactions } = useContext(TransactionContext);
 
-  const addTransaction = (e) => {
-    e.preventDefault();
-    console.log(database);
-    if (name === "") {
-      alert("your item has no name");
-      return;
-    }
-
-    if (Number(amount) === 0 || amount === "") {
-      alert("you transaction amount cannot be empty or zero");
-      return;
-    }
-    updateDatabase({ name: name, amount: amount });
-    setName("");
-    setAmount("");
-  };
   return (
     <div>
-      <form action="">
+      <form action="" onSubmit={(e) => e.preventDefault()}>
         <h3 className="font-semibold border-b pb-1 text-lg mt-3">
           Add new transaction
         </h3>
@@ -67,9 +47,10 @@ export const AddTransaction = () => {
           </div>
           <button
             className="mt-4 w-full py-3 bg-indigo-600 text-white font-semibold rounded-md shadow uppercase border-b-4 border-indigo-700"
-            onClick={(e) => {
-              e.preventDefault();
-              addTransaction(e);
+            onClick={() => {
+              addTransactions(name, amount);
+              setName("");
+              setAmount("");
             }}
           >
             Add Transaction
